@@ -19,7 +19,7 @@ steps:
   - cp .env.example .env
   - php artisan key:generate
 
-  - name: publish
+- name: publish
   image: registry.cn-beijing.aliyuncs.com/nfangxu/laranginx:1.1
   settings:
     tags: ${DRONE_COMMIT_SHA:0:8}
