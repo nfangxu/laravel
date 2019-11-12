@@ -19,3 +19,6 @@ steps:
 - name: publish
   pull: always
   image: registry.cn-beijing.aliyuncs.com/nfangxu/laravel
+  tags:
+    - ${DRONE_TAG=latest}
+  insecure: true
