@@ -34,7 +34,7 @@ steps:
     tags: ${DRONE_BUILD_NUMBER}
 
 - name: deploy
-  image: helm:v1.16.2
+  image: kubectl:v1.16.2
   commands:
   - helm delete laravel --purge || true
   - helm install fx-web --name laravel --namespace default --set image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel" \
