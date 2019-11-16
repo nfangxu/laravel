@@ -10,6 +10,9 @@ spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: drone-laravel
   template:
     metadata:
       labels:
