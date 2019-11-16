@@ -1,33 +1,45 @@
 # deployment
-apiVersion: apps/v1
 kind: Deployment
+apiVersion: apps/v1
 metadata:
+  name: drone-laravel-deployment
+  namespace: default
   labels:
     k8s-app: drone-laravel
-  name: drone-laravel-deploy
-  namespace: default
 spec:
-  progressDeadlineSeconds: 600
   replicas: 1
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       k8s-app: drone-laravel
   template:
     metadata:
+      creationTimestamp: null
       labels:
         k8s-app: drone-laravel
     spec:
       containers:
-        image: registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel:1.0
-        imagePullPolicy: IfNotPresent
-        ports:
-          - containerPort: 80
-            name: http
-            protocol: TCP
-          - containerPort: 443
-            name: https
-            protocol: TCP
+        - name: drone-laravel
+          image: 'registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel:1.0'
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+
 # service
 ---
 kind: Service
