@@ -26,8 +26,6 @@ steps:
 #     repo: registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel
 
 - name: deploy
-  image: lachlanevenson/k8s-kubectl:v1.16.2
+  image: kubectl:v1.16.2
   commands:
-  - export KUBECONFIG=/root/.kube/config
-  - cp -r .kubeconfig /root/.kube/config
   - kubectl get pods -A
