@@ -34,16 +34,16 @@ steps:
 #     tags: ${DRONE_BUILD_NUMBER}
 
 - name: deploy
-  image: quay.io/ipedrazas/drone-helm
+  image: helm:v1.16.2
   chart: ./chart
-  release: ${DRONE_BRANCH}
+  release: laravel
   values: image.tag="33"
   namespace: default
   debug: true
-  api_server: 
-    from_secret: k8s_server
-  kubernetes_token: 
-    from_secret: k8s_token
+  # api_server: 
+  #   from_secret: k8s_server
+  # kubernetes_token: 
+  #   from_secret: k8s_token
   # commands:
   # - helm search fx-web
   # - helm delete laravel --purge || true
