@@ -34,7 +34,7 @@ steps:
     tags: ${DRONE_BUILD_NUMBER}
 
 - name: deploy
-  image: kubectl:v1.16.2
+  image: helm:v1.16.2
   commands:
   - kubectl get pods -A
   - helm delete laravel --purge || true
