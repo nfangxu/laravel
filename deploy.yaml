@@ -79,5 +79,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: drone-laravel
+              serviceName: drone-laravel-service
               servicePort: 80
