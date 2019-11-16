@@ -15,7 +15,7 @@ steps:
 - name: install
   image: registry.cn-beijing.aliyuncs.com/nfangxu/laranginx:1.1
   commands:
-#  - composer install
+  - composer install
   - cp .env.example .env
   - php artisan key:generate
 
