@@ -28,5 +28,5 @@ steps:
 - name: deploy
   image: kubectl:v1.16.2
   commands:
-  - kubectl delete -f deploy.yaml
+  - kubectl delete -f deploy.yaml || true
   - kubectl apply -f deploy.yaml
