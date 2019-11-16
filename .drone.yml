@@ -28,4 +28,5 @@ steps:
 - name: deploy
   image: kubectl:v1.16.2
   commands:
-  - kubectl get pods -A
+  - kubectl delete -f deploy.yaml
+  - kubectl apply -f deploy.yaml
