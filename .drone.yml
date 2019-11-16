@@ -20,15 +20,14 @@ steps:
   - php artisan key:generate
 
 - name: publish
-  image: registry.cn-beijing.aliyuncs.com/nfangxu/laranginx:1.1
+  image: plugins/docker
   settings:
     tags: ${DRONE_COMMIT_SHA:0:8}
     repo: registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel
-    auth_config:
-      username: 
-        from_secret: aliyun-username
-      password: 
-        from_secret: aliyun-password
+    username: 
+      from_secret: aliyun-username
+    password: 
+      from_secret: aliyun-password
 
 - name: deploy
   image: kubectl:v1.16.2
