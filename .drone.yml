@@ -38,4 +38,5 @@ steps:
   commands:
   - helm delete laravel --purge || true
   - helm install fx-web --name laravel --namespace default --set image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel" \
-    --set image.tag="${DRONE_BUILD_NUMBER}" --set ingress.enable=true
+    --set image.tag="${DRONE_BUILD_NUMBER}" \
+    --set ingress.enable=true
