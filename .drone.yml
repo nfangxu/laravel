@@ -21,10 +21,17 @@ steps:
 
 - name: publish
   image: plugins/docker
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
   settings:
-    auto_tag: true
-    repo: "registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel"
-    secrets: [ aliyun_username, aliyun_password ]
+    username: 
+      from_secret: aliyun_username
+    password: 
+      from_secret: aliyun_password
+    repo: registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel
+    registry: registry-vpc.cn-beijing.aliyuncs.com
+    tags: ${DRONE_BUILD_NUMBER}
 
 - name: deploy
   image: kubectl:v1.16.2
