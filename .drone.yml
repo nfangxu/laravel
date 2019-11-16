@@ -19,8 +19,15 @@ steps:
   - cp .env.example .env
   - php artisan key:generate
 
-# - name: publish
-#   image: registry.cn-beijing.aliyuncs.com/nfangxu/laranginx:1.1
-#   settings:
-#     tags: ${DRONE_COMMIT_SHA:0:8}
-#     repo: registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel
+- name: publish
+  image: registry.cn-beijing.aliyuncs.com/nfangxu/laranginx:1.1
+  settings:
+    tags: ${DRONE_COMMIT_SHA:0:8}
+    repo: registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel
+
+- name: deploy
+  image: kubectl:latest
+  commands:
+  - export KUBECONFIG=/root/.kube/config
+  - cp -r .kubeconfig /root/.kube/config
+  - kubectl get pods -A
