@@ -19,25 +19,31 @@ steps:
 #   - cp .env.example .env
 #   - php artisan key:generate
 
-- name: publish
-  image: plugins/docker
-  volumes:
-  - name: docker
-    path: /var/run/docker.sock
-  settings:
-    username: 
-      from_secret: aliyun_username
-    password: 
-      from_secret: aliyun_password
-    repo: registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel
-    registry: registry-vpc.cn-beijing.aliyuncs.com
-    tags: ${DRONE_BUILD_NUMBER}
+# - name: publish
+#   image: plugins/docker
+#   volumes:
+#   - name: docker
+#     path: /var/run/docker.sock
+#   settings:
+#     username: 
+#       from_secret: aliyun_username
+#     password: 
+#       from_secret: aliyun_password
+#     repo: registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel
+#     registry: registry-vpc.cn-beijing.aliyuncs.com
+#     tags: ${DRONE_BUILD_NUMBER}
 
 - name: deploy
   image: helm:v1.16.2
+  values: 
+    image:
+      repository: "registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel"
+      tag: "33"
+    ingress:
+      enabled: true
+    hosts:
+    - host: laravel.nfangxu.cn
+      paths: []
   commands:
-  - kubectl get pods -A
   - helm delete laravel --purge || true
-  - helm install fx-web --name laravel --namespace default --set image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel" \
-    --set image.tag="${DRONE_BUILD_NUMBER}" \
-    --set ingress.enable=true
+  - helm install fx-web --name laravel --namespace default
