@@ -12,12 +12,12 @@ trigger:
   - push
 
 steps:
-- name: install
-  image: registry.cn-beijing.aliyuncs.com/nfangxu/laranginx:1.1
-  commands:
-  - composer install
-  - cp .env.example .env
-  - php artisan key:generate
+# - name: install
+#   image: registry.cn-beijing.aliyuncs.com/nfangxu/laranginx:1.1
+#   commands:
+#   - composer install
+#   - cp .env.example .env
+#   - php artisan key:generate
 
 - name: publish
   image: plugins/docker
