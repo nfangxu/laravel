@@ -25,10 +25,7 @@ steps:
     tags: ${DRONE_COMMIT_SHA:0:8}
     repo: 
       from_secret: aliyun-repo
-    username: 
-      from_secret: aliyun-username
-    password: 
-      from_secret: aliyun-password
+    secrets: [ aliyun_username, aliyun_password ]
 
 - name: deploy
   image: kubectl:v1.16.2
