@@ -23,7 +23,8 @@ steps:
   image: plugins/docker
   settings:
     tags: ${DRONE_COMMIT_SHA:0:8}
-    repo: registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel
+    repo: 
+      from_secret: aliyun-repo
     username: 
       from_secret: aliyun-username
     password: 
