@@ -35,10 +35,11 @@ steps:
 
 - name: deploy
   image: helm:v1.16.2
-  chart: local/fx-web
-  release: helm-test
-  values: ingress.host="test.nfangxu.cn",image.tag="33",image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel"
   api_server: 
     from_secret: k8s_server
   kubernetes_token: 
     from_secret: k8s_token
+  commands:
+  - helm search fx-web
+  - helm delete helm-test --purge || true
+  - helm install fx-web --name helm-test --set ingress.host="test.nfangxu.cn" --set image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel" --set image.tag="33"
