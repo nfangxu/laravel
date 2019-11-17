@@ -34,7 +34,7 @@ steps:
 #     tags: ${DRONE_BUILD_NUMBER}
 
 - name: deploy
-  image: helm:v1.16.2
+  image: kubectl:v1.16.2
   api_server: 
     from_secret: k8s_server
   kubernetes_token: 
