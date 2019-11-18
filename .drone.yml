@@ -33,13 +33,24 @@ steps:
 #     registry: registry-vpc.cn-beijing.aliyuncs.com
 #     tags: ${DRONE_BUILD_NUMBER}
 
-- name: deploy
-  image: quay.io/ipedrazas/drone-helm
-  api_server: 
-    from_secret: k8s_server
-  kubernetes_token: 
-    from_secret: k8s_token
-  commands:
-  - drone-helm search fx-web
-  - drone-helm delete helm-test --purge || true
-  - drone-helm install fx-web --name helm-test --set ingress.host="test.nfangxu.cn" --set image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel" --set image.tag="33"
+# - name: deploy
+#   image: quay.io/ipedrazas/drone-helm
+#   api_server: 
+#     from_secret: k8s_server
+#   kubernetes_token: 
+#     from_secret: k8s_token
+#   commands:
+#   - drone-helm search fx-web
+#   - drone-helm delete helm-test --purge || true
+#   - drone-helm install fx-web --name helm-test --set ingress.host="test.nfangxu.cn" --set image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel" --set image.tag="33"
+
+  - name: deploy
+    image: quay.io/ipedrazas/drone-helm
+    skip_tls_verify: true
+    chart: ./chart
+    release: ${DRONE_BRANCH}
+    values: image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel",image.tag=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
+    dry-run: true
+    secrets: [k8s_server, k8s_token]
+    when:
+      branch: [master]
