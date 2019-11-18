@@ -44,16 +44,24 @@ steps:
 #   - drone-helm delete helm-test --purge || true
 #   - drone-helm install fx-web --name helm-test --set ingress.host="test.nfangxu.cn" --set image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel" --set image.tag="33"
 
-  - name: deploy
-    image: helm:v1.16.2
-    skip_tls_verify: true
-    chart: ./chart
-    release: ${DRONE_BRANCH}
-    values: image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel",image.tag=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
-    dry-run: true
-    secrets: [k8s_server, k8s_token]
-    environment: 
-      VERSION: "v2.16.0"
-      KUBECTL: "v1.16.2"
-    when:
-      branch: [master]
+# - name: deploy
+#   image: helm:v1.16.2
+#   skip_tls_verify: true
+#   chart: ./chart
+#   release: ${DRONE_BRANCH}
+#   values: image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel",image.tag=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
+#   dry-run: true
+#   secrets: [k8s_server, k8s_token]
+#   environment: 
+#     VERSION: "v2.16.0"
+#     KUBECTL: "v1.16.2"
+#   when:
+#     branch: [master]
+
+- name: deploy
+  image: vallard/drone-kube
+  server:
+    from_secret: k8s_server
+  token:
+    from_secret: k8s_token
+  template: deploy.yaml
