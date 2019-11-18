@@ -52,5 +52,8 @@ steps:
     values: image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel",image.tag=${DRONE_BRANCH}-${DRONE_COMMIT_SHA:0:7}
     dry-run: true
     secrets: [k8s_server, k8s_token]
+    environment: 
+      - VERSION="v2.16.0"
+      - KUBECTL="v1.16.2"
     when:
       branch: [master]
