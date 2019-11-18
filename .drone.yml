@@ -45,7 +45,7 @@ steps:
 #   - drone-helm install fx-web --name helm-test --set ingress.host="test.nfangxu.cn" --set image.repository="registry-vpc.cn-beijing.aliyuncs.com/nfangxu/laravel" --set image.tag="33"
 
   - name: deploy
-    image: quay.io/ipedrazas/drone-helm
+    image: helm:v1.16.2
     skip_tls_verify: true
     chart: ./chart
     release: ${DRONE_BRANCH}
