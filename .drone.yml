@@ -53,7 +53,7 @@ steps:
     dry-run: true
     secrets: [k8s_server, k8s_token]
     environment: 
-      - VERSION: "v2.16.0"
-      - KUBECTL: "v1.16.2"
+      VERSION: "v2.16.0"
+      KUBECTL: "v1.16.2"
     when:
       branch: [master]
